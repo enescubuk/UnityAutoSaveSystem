@@ -1,0 +1,33 @@
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+[InitializeOnLoad]
+public class AutoSaveInEditor
+{
+    // Otomatik kaydetme için aralık (saniye cinsinden).
+    static double saveInterval = 300; // 5 dakika
+    static double nextSaveTime = 0;
+
+    static AutoSaveInEditor()
+    {
+        EditorApplication.update += Update;
+        nextSaveTime = EditorApplication.timeSinceStartup + saveInterval;
+    }
+
+    static void Update()
+    {
+        if (EditorApplication.timeSinceStartup > nextSaveTime)
+        {
+            // Kaydetme işlemini gerçekleştir
+            Debug.Log("Auto-saving all open scenes... " + System.DateTime.Now);
+            // Değişiklik yapılmış tüm sahneleri kaydeder
+            EditorSceneManager.SaveOpenScenes();
+            // Assetleri kaydeder
+            AssetDatabase.SaveAssets();
+            
+            // Sonraki kaydetme zamanını ayarla
+            nextSaveTime = EditorApplication.timeSinceStartup + saveInterval;
+        }
+    }
+}
