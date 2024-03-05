@@ -1,2 +1,2 @@
 # UnityAutoSaveSystem
-Auto Save System for Unity
+Create "Editor" folder in your Assets Folder and then put this script to new folder
